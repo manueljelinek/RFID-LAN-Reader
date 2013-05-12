@@ -14,9 +14,10 @@ public class Request
 
 
   private static final String CR_LF = "\r\n";
-  private static final String TAG_UID     = "uid=";
-  private static final String REQUEST_STR = "request=";
-  private static final String GET_VERSION = "version;";
+  private static final String TAG_UID      = "uid=";
+  private static final String REQUEST_STR  = "request=";
+  private static final String REQUEST_NAME = "name=";
+  private static final String GET_VERSION  = "version;";
 
   // -------------------- Parameters for Config --------------------
   private static final String GET_CONFIG     = "config.get;";
@@ -30,9 +31,15 @@ public class Request
   private static final String ISO_SELECT    = "iso.select;";
   private static final String ISO_READ      = "iso.read;";
 
-  private static final String ISO_ADDRESS = "address=";
-  private static final String ISO_COUNT   = "count=";
+  private static final String ISO_COUNT = "count=";
   // ---------------------------------------------------------------
+
+  // ------------------- Parameters for ISO TAGs -------------------
+  private static final String MIFARE_IDENTIFY = "mifare.identify;";
+  private static final String MIFARE_READ     = "mifare.read;";
+
+  // ---------------------------------------------------------------
+  private static final String ADDRESS = "address=";
 
 
   public void connect( String ipaddress, int... port ) throws Exception
@@ -72,7 +79,7 @@ public class Request
   public String getConfigName() throws IOException
   {
     String name;
-    output.writeBytes( REQUEST_STR + GET_CONFIG + CONFIG_NAME + CR_LF );
+    output.writeBytes( REQUEST_STR + GET_CONFIG + REQUEST_NAME + CONFIG_NAME + CR_LF );
     name = input.readLine();
     return name;
   }
@@ -107,11 +114,28 @@ public class Request
   public String isoRead() throws IOException
   {
     String error;
-    output.writeBytes( REQUEST_STR + ISO_READ + ISO_ADDRESS + "0;" + ISO_COUNT + "8;" + CR_LF );
+    output.writeBytes( REQUEST_STR + ISO_READ + ADDRESS + "0;" + ISO_COUNT + "8;" + CR_LF );
     error = input.readLine();
     return error;
   }
   // -------------------- (end) ISO Methods --------------------
 
 
+  // ----------------- (begin) MIFARE Methods ------------------
+  public String mifareIdentify() throws IOException
+  {
+    String taglist;
+    output.writeBytes( REQUEST_STR + MIFARE_IDENTIFY + CR_LF );
+    taglist = input.readLine();
+    return taglist;
+  }
+
+  public String mifareRead() throws IOException
+  {
+    String taglist;
+    output.writeBytes( REQUEST_STR + MIFARE_READ + ADDRESS + "0;" + CR_LF );
+    taglist = input.readLine();
+    return taglist;
+  }
+  // ------------------- (end) MIFARE Methods ------------------
 }
