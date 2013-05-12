@@ -37,29 +37,42 @@ public class LANReader
   return ret;
   }
 
-  public Vector<String> onRead() throws IOException
+  public Vector<String> onRead()
   {
     Vector<String> ret_vec = new Vector<String>();
-    String ret =request.isoInventory();
-    String word = "taglist=";
-    int start_index = ret.lastIndexOf(word)+word.length()-1;
-    for (int i = start_index; (i = ret.indexOf(",", i + 1)) != -1; ) {
-      ret_vec.addElement(ret.substring(start_index+1, i));
-      start_index = i;
-  }
-    ret_vec.addElement(ret.substring(start_index+1, ret.length()));
+
+    try
+    {
+      String ret =request.isoInventory();
+      String word = "taglist=";
+      int start_index = ret.lastIndexOf(word)+word.length()-1;
+      for (int i = start_index; (i = ret.indexOf(",", i + 1)) != -1; ) {
+        ret_vec.addElement(ret.substring(start_index+1, i));
+        start_index = i;
+      }
+      ret_vec.addElement(ret.substring(start_index+1, ret.length()));
+    } catch (Exception e1)
+    {
+      ret_vec.addElement("Error occured");
+      e1.printStackTrace();
+    }
     return ret_vec;
   }
 
-  public void onDisconnect()
+  public String onDisconnect()
   {
+    String ret;
     try
     {
+      ret = "disconnected";
       request.disconnect();
     } catch (IOException e)
     {
+      ret = "Error occured!!";
       e.printStackTrace();
     }
+
+    return ret;
   }
 
 

@@ -3,7 +3,7 @@ package at.LANReader;
 import java.awt.EventQueue;
 
 import at.LANReader.gui.GUI_martin;
-//import at.LANReader.gui.gui;
+import at.LANReader.gui.gui;
 
 public class MainClass
 {

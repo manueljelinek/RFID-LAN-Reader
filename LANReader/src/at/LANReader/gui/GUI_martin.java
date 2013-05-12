@@ -1,27 +1,19 @@
 package at.LANReader.gui;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
-import at.LANReader.LANReader;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Vector;
-
-
-import java.awt.BorderLayout;
-import java.awt.Label;
-import java.util.Calendar;
-
-
-import javax.swing.JTextField;
-import javax.swing.JTabbedPane;
-import javax.swing.JPanel;
-import javax.swing.JList;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+
+import at.LANReader.LANReader;
 
 public class GUI_martin
 {
@@ -74,11 +66,11 @@ public class GUI_martin
     Tab1.addTab("Read", null, PannelRead, null);
     PannelRead.setLayout(null);
     
-    final JList<String> listRead = new JList<String>();
+    final JList listRead = new JList();
     listRead.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        txtselected.setText(listRead.getSelectedValue());
+        txtselected.setText((String) listRead.getSelectedValue());
       }
     });
     listRead.setBounds(12, 12, 200, 224);
@@ -88,14 +80,7 @@ public class GUI_martin
     btnRead.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         Vector<String> ret_string = new Vector<String>();
-        try
-        {
-          ret_string = lanreader.onRead();
-        } catch (Exception e1)
-        {
-          ret_string.addElement("Error occured");
-          e1.printStackTrace();
-        }
+        ret_string = lanreader.onRead();
         listRead.setListData(ret_string);
       }
     });
@@ -106,7 +91,7 @@ public class GUI_martin
     txtselected.setBounds(317, 11, 114, 19);
     PannelRead.add(txtselected);
     txtselected.setColumns(10);
-        
+
     btnConnect.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         String ret_string;
@@ -122,18 +107,11 @@ public class GUI_martin
         txtConnect.setText(ret_string);
       }
     });
-        
+
     btnDisconnect.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         String ret_string;
-        try
-        {
-          ret_string = lanreader.onDisconnect();
-        } catch (IOException e1)
-        {
-          ret_string = "Error occured!!";
-          e1.printStackTrace();
-        }
+        ret_string = lanreader.onDisconnect();
         txtConnect.setText(ret_string);
       }
     });  
