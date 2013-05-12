@@ -2,10 +2,10 @@ package at.LANReader;
 
 import java.awt.EventQueue;
 
-import at.LANReader.gui.gui;
+import at.LANReader.gui.GUI_martin;
 //import at.detego.LANReader.Request;
 
-public class main
+public class MainClass
 {
 
   /**
@@ -21,7 +21,7 @@ public class main
       {
         try
         {
-          gui window = new gui();
+          GUI_martin window = new GUI_martin();
           window.frame.setVisible(true);
         } catch (Exception e)
         {
