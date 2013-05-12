@@ -3,15 +3,14 @@ package at.LANReader;
 import java.awt.EventQueue;
 
 import at.LANReader.gui.gui;
-//import at.detego.LANReader.Request;
 
-public class main
+public class MainClass
 {
 
   /**
    * @param args
    */
-  public static void main(String[] args) throws Exception
+  public static void main(String[] args)
   {
     System.out.println("This is the Testprogram for RFID-LAN-Reader!");
 
@@ -19,14 +18,8 @@ public class main
     {
       public void run()
       {
-        try
-        {
-          gui window = new gui();
-          window.frame.setVisible(true);
-        } catch (Exception e)
-        {
-          e.printStackTrace();
-        }
+        gui window = new gui();
+        window.frame.setVisible(true);
       }
     });
   }

@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import at.detego.LANReader.ReaderException;
+
 public class Request
 {
+  private boolean connected = false;
   private Socket clientsocket;
   private BufferedReader input;
   private DataOutputStream output;
@@ -42,10 +45,13 @@ public class Request
   private static final String ADDRESS = "address=";
 
 
-  public void connect( String ipaddress, int... port ) throws Exception
+  public void connect( String ipaddress, int... port ) throws IOException, ReaderException
   {
+    if( connected )
+      return;
+
     if( port.length > 1 )
-      throw new Exception("Too much parameters!");
+      throw new ReaderException("Too many parameters!!");
 
     if( port.length == 0)
     {
@@ -54,6 +60,7 @@ public class Request
     }
 
     clientsocket = new Socket(ipaddress, port[0]);
+    connected = true;
     System.out.println( "Connection Established!!" );
     output = new DataOutputStream( clientsocket.getOutputStream() );
     input  = new BufferedReader( new InputStreamReader(clientsocket.getInputStream()) );
@@ -62,11 +69,15 @@ public class Request
 
   public void disconnect() throws IOException
   {
+    if( !connected )
+      return;
+
     clientsocket.close();
+    connected = false;
     System.out.println( "Connection Terminated!!" );
   }
 
-  public String getVersion() throws IOException, InterruptedException
+  public String getVersion() throws IOException
   {
     String version;
     output.writeBytes( REQUEST_STR + GET_VERSION + CR_LF );
@@ -139,3 +150,5 @@ public class Request
   }
   // ------------------- (end) MIFARE Methods ------------------
 }
+
+
