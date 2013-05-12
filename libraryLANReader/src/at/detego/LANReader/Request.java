@@ -151,4 +151,24 @@ public class Request
   // ------------------- (end) MIFARE Methods ------------------
 }
 
+//----------------------TIMER CODE---------------------------
+//-----------------------Für Oberfläche-----------------------
+//javax.swing.Timer t = new javax.swing.Timer( 1000, new ActionListener() {
+//  public void actionPerformed( ActionEvent e ) {
+//    Calendar calender = Calendar.getInstance();
+//        SimpleDateFormat sdf = new SimpleDateFormat();
+//        sdf.applyPattern( "EEEE', 'dd. MMMM yyyy");
+//        /* EEEE steht für Tag der Woche lang*/
+//        /* E steht für Tag der Woche kurz z.B.: Mi */
+//        SimpleDateFormat sdfzeit = new SimpleDateFormat();
+//        sdfzeit.applyPattern( "HH:mm:ss" );
+//        label.this.setTitle(sdf.format(calender.getTime()) + "        " +   
+//                                 sdfzeit.format(calender.getTime()));
+//        }
+//  }
+//); 
+//t.start();
+
+
+
 

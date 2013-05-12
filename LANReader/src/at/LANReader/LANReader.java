@@ -2,6 +2,8 @@ package at.LANReader;
 
 import java.io.IOException;
 
+import java.util.Vector;
+
 import at.detego.LANReader.Request;
 import at.detego.LANReader.ReaderException;
 
@@ -13,19 +15,40 @@ public class LANReader
   {
     request = new Request();
   }
-
-  public void onConnect()
+  
+  public String onConnect()
   {
+    String ret;
+
     try
     {
+      ret = "connected";
       request.connect("192.168.1.234");
     } catch (ReaderException e)
     {
+      ret = e.toString();
       e.printStackTrace();
     } catch (IOException e)
     {
+      ret = "Net-IO-Error!!";
       e.printStackTrace();
     }
+
+  return ret;
+  }
+
+  public Vector<String> onRead() throws IOException
+  {
+    Vector<String> ret_vec = new Vector<String>();
+    String ret =request.isoInventory();
+    String word = "taglist=";
+    int start_index = ret.lastIndexOf(word)+word.length()-1;
+    for (int i = start_index; (i = ret.indexOf(",", i + 1)) != -1; ) {
+      ret_vec.addElement(ret.substring(start_index+1, i));
+      start_index = i;
+  }
+    ret_vec.addElement(ret.substring(start_index+1, ret.length()));
+    return ret_vec;
   }
 
   public void onDisconnect()

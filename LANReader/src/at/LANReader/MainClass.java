@@ -2,7 +2,8 @@ package at.LANReader;
 
 import java.awt.EventQueue;
 
-import at.LANReader.gui.gui;
+import at.LANReader.gui.GUI_martin;
+//import at.LANReader.gui.gui;
 
 public class MainClass
 {
@@ -18,7 +19,8 @@ public class MainClass
     {
       public void run()
       {
-        gui window = new gui();
+        GUI_martin window = new GUI_martin();
+//        gui window = new gui();
         window.frame.setVisible(true);
       }
     });
