@@ -53,6 +53,7 @@ public class gui
     btnDisconnect.setBounds(288, 237, 117, 25);
     frame.getContentPane().add(btnDisconnect);
     
+    
     final JSpinner spinner = new JSpinner();
     spinner.setModel(new SpinnerNumberModel(new Integer(0), null, null, new Integer(1)));
     spinner.setBounds(12, 205, 62, 20);
