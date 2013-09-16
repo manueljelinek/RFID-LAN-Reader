@@ -19,8 +19,8 @@ public class MainClass
     {
       public void run()
       {
-//        GUI_martin window = new GUI_martin();
-        gui window = new gui();
+        GUI_martin window = new GUI_martin();
+//        gui window = new gui();
         window.frame.setVisible(true);
       }
     });

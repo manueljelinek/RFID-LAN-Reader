@@ -63,7 +63,7 @@ public class LANReader
     }
     return ret_vec;
   }
-  
+
   public Vector<String> onReadMifare()
   {
     Vector<String> ret_vec = new Vector<String>();
@@ -80,6 +80,69 @@ public class LANReader
       e.printStackTrace();
     }
     return ret_vec;
+  }
+
+  public Vector<String> readTUCard()
+  {
+    Vector<String> allmessages = new Vector<String>();
+    String word = "blockdata=";
+    String message;
+    try
+    {
+      for (int i = 0; i < 3; i++)
+      {
+        request.mifareIdentify();
+        request.mifareStoreKey();
+        request.mifareLogin();
+        message = request.mifareRead(i+4);
+        int start_index = message.lastIndexOf(word) + word.length() - 1;
+        String hex = message.substring(start_index + 1, message.length());
+        message = convertHexToString(hex);
+        allmessages.addElement(message);
+      }
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+
+    return allmessages;
+  }
+
+  public  Vector<String>  readOneBlock()
+  {
+    String message;
+    Vector<String> allmessages = new Vector<String>();
+    
+    try
+    {
+      message = request.mifareIdentify();
+      allmessages.addElement(message);
+      message = request.mifareStoreKey();
+      allmessages.addElement(message);
+      message = request.mifareLogin();
+      allmessages.addElement(message);
+      message = request.mifareRead(4);
+      allmessages.addElement(message);
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+
+    return allmessages;
+  }
+
+  
+  private String convertHexToString(String hex)
+  {
+    StringBuilder output = new StringBuilder();
+    for (int i = 0; i < hex.length(); i += 2)
+    {
+      String str = hex.substring(i, i + 2);
+      output.append((char) Integer.parseInt(str, 16));
+    }
+    return output.toString();
   }
 
   public String onDisconnect()
@@ -120,27 +183,27 @@ public class LANReader
         allmessages.addElement(message);
         break;
       case 2:
-          message = request.mifareIdentify();
-          allmessages.addElement(message);
-          break;
+        message = request.mifareIdentify();
+        allmessages.addElement(message);
+        break;
       case 3:
-          message = request.mifareStoreKey();
-          allmessages.addElement(message);
-          break;
+        message = request.mifareStoreKey();
+        allmessages.addElement(message);
+        break;
       case 4:
-          message = request.mifareLogin();
-          allmessages.addElement(message);
-          break;
+        message = request.mifareLogin();
+        allmessages.addElement(message);
+        break;
       case 5:
-          message = request.mifareIdentify();
-          allmessages.addElement(message);
-          message = request.mifareStoreKey();
-          allmessages.addElement(message);
-          message = request.mifareLogin();
-          allmessages.addElement(message);
-          message = request.mifareRead();
-          allmessages.addElement(message);
-          break;
+        message = request.mifareIdentify();
+        allmessages.addElement(message);
+        message = request.mifareStoreKey();
+        allmessages.addElement(message);
+        message = request.mifareLogin();
+        allmessages.addElement(message);
+        message = request.mifareRead(4);
+        allmessages.addElement(message);
+        break;
       default:
         message = "Case not Implemented!!";
         allmessages.addElement(message);
@@ -165,5 +228,6 @@ public class LANReader
 
     return allmessages;
   }
- 
+
+
 }

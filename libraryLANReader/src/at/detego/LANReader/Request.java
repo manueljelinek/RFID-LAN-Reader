@@ -144,8 +144,8 @@ public class Request
   public String mifareStoreKey() throws IOException
   {
 	String ret;
-	output.writeBytes( "request=mifare.storekey;id=1;key=a0a1a2a3a4a5;" + CR_LF );
-//	output.writeBytes( "request=mifare.storekey;id=1;key=ffffffffffff;" + CR_LF );
+//	output.writeBytes( "request=mifare.storekey;id=1;key=a0a1a2a3a4a5;" + CR_LF );
+	output.writeBytes( "request=mifare.storekey;id=1;key=ffffffffffff;" + CR_LF );
 	ret = input.readLine();
 	return ret;
   }
@@ -153,15 +153,15 @@ public class Request
   public String mifareLogin() throws IOException
   {
 	String ret;
-	output.writeBytes( "request=mifare.login;keyid=1;uid=3CA18EE8;block=0;keytype=A;" + CR_LF );
+	output.writeBytes( "request=mifare.login;keyid=1;uid=3CA18EE8;block=5;keytype=A;" + CR_LF );
 	ret = input.readLine();
 	return ret;
   }
 
-  public String mifareRead() throws IOException
+  public String mifareRead(int block) throws IOException
   {
     String taglist;
-    output.writeBytes( REQUEST_STR + MIFARE_READ + ADDRESS + "0;" + CR_LF );
+    output.writeBytes( REQUEST_STR + MIFARE_READ + ADDRESS + block + ";" + CR_LF );
     taglist = input.readLine();
     return taglist;
   }
