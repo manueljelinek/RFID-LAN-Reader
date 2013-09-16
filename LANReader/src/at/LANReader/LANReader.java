@@ -76,12 +76,13 @@ public class LANReader
   }
 
 
-  public String testFunctions(Integer choosen)
+  public Vector<String> testFunctions(Integer choosen)
   {
     // Karten UID: 1: E0054000001F694D  2: E0054000001FA14D  3: E0054000001F6520
     // NFC-Tag UID:   04BD3E2ABD2B80
 
     String message;
+    Vector<String> allmessages = new Vector<String>();
 
     try
     {
@@ -89,16 +90,42 @@ public class LANReader
       {
       case 0:
         message = "Nothing to test on Null";
+        allmessages.addElement(message);
         break;
       case 1:
         message = request.getVersion();
+        allmessages.addElement(message);
         break;
+      case 2:
+          message = request.mifareIdentify();
+          allmessages.addElement(message);
+          break;
+      case 3:
+          message = request.mifareStoreKey();
+          allmessages.addElement(message);
+          break;
+      case 4:
+          message = request.mifareLogin();
+          allmessages.addElement(message);
+          break;
+      case 5:
+          message = request.mifareIdentify();
+          allmessages.addElement(message);
+          message = request.mifareStoreKey();
+          allmessages.addElement(message);
+          message = request.mifareLogin();
+          allmessages.addElement(message);
+          message = request.mifareRead();
+          allmessages.addElement(message);
+          break;
       default:
         message = "Case not Implemented!!";
+        allmessages.addElement(message);
       }
     } catch (IOException e)
     {
       message = "IO-Error!!";
+      allmessages.addElement(message);
       e.printStackTrace();
     }
 
@@ -113,7 +140,7 @@ public class LANReader
 //    System.out.println(request.mifareRead());
 
 
-    return message;
+    return allmessages;
   }
 }
 
