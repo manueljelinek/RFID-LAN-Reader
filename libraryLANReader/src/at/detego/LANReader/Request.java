@@ -140,6 +140,23 @@ public class Request
     taglist = input.readLine();
     return taglist;
   }
+  
+  public String mifareStoreKey() throws IOException
+  {
+	String ret;
+	output.writeBytes( "request=mifare.storekey;id=1;key=a0a1a2a3a4a5;" + CR_LF );
+//	output.writeBytes( "request=mifare.storekey;id=1;key=ffffffffffff;" + CR_LF );
+	ret = input.readLine();
+	return ret;
+  }
+
+  public String mifareLogin() throws IOException
+  {
+	String ret;
+	output.writeBytes( "request=mifare.login;keyid=1;uid=3CA18EE8;block=0;keytype=A;" + CR_LF );
+	ret = input.readLine();
+	return ret;
+  }
 
   public String mifareRead() throws IOException
   {
